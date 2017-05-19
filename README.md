@@ -61,13 +61,13 @@ let launchScreenSnapshot = LaunchScreenSnapshot.shared
 #### Custom built:
 
 ```swift
-let launchScreenSnapshot = LaunchScreenSnapshot(application: <#T##Custom UIApplication#>, notificationCenter: <#T##Custom NotificationCenter#>, bundle: <#T##Custom Bundle#>)
+let launchScreenSnapshot = LaunchScreenSnapshot(application: UIApplication, notificationCenter: NotificationCenter, bundle: Bundle)
 ```
 
 #### Provided parameters:
 
 ```swift
-launchScreenSnapshot.protect(with: <#T##Custom UIView?#>, duration: <#T##Duration TimeInterval#>, delay: <#T##Delay TimeInterval#>, dampingRatio: <#T##Damping Ratio CGFloat#>, velocity: <#T##Velocity CGFloat#>, options: <#T##UIViewAnimationOptions#>, force: <#T##Force Bool#>)
+launchScreenSnapshot.protect(with: UIView?, duration: TimeInterval, delay: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions, force: Bool)
 ```
 
 ## Etc.
