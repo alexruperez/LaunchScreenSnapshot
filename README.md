@@ -8,6 +8,7 @@
 [![Swift Package Manager Compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-4BC51D.svg?style=flat)](https://github.com/apple/swift-package-manager)
 [![Build Status](https://travis-ci.org/alexruperez/LaunchScreenSnapshot.svg?branch=master)](https://travis-ci.org/alexruperez/LaunchScreenSnapshot)
 [![Code Coverage](https://codecov.io/gh/alexruperez/LaunchScreenSnapshot/branch/master/graph/badge.svg)](https://codecov.io/gh/alexruperez/LaunchScreenSnapshot)
+[![codebeat badge](https://codebeat.co/badges/97c6f7e9-baa5-4c73-bb2c-ba31b7ccecd3)](https://codebeat.co/projects/github-com-alexruperez-launchscreensnapshot-master)
 
 *LaunchScreenSnapshot* protects sensitive data in your app snapshot.
 
