@@ -31,6 +31,18 @@ class LaunchScreenSnapshotTests: XCTestCase {
         XCTAssertTrue(window.subviews.contains(view))
     }
 
+    func testApplicationDidEnterBackground() {
+        let window = UIWindow()
+        let view = UIView()
+        let notificationCenter = NotificationCenter.default
+        let launchScreenSnapshot = LaunchScreenSnapshot(notificationCenter: notificationCenter)
+        launchScreenSnapshot.window = window
+        launchScreenSnapshot.protect(with: view, trigger: .didEnterBackground)
+        XCTAssertFalse(window.subviews.contains(view))
+        notificationCenter.post(name: .UIApplicationDidEnterBackground, object: nil)
+        XCTAssertTrue(window.subviews.contains(view))
+    }
+
     func testApplicationDidBecomeActive() {
         let window = UIWindow()
         let view = UIView()

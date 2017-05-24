@@ -45,12 +45,21 @@ public class LaunchScreenSnapshot {
         }
     }
 
+    /// Protection trigger.
+    public enum Trigger {
+        /// Protect when app will resign active.
+        case willResignActive
+        /// Protect when app did enter background.
+        case didEnterBackground
+    }
+
     /// Shared LaunchScreenSnapshot instance with default configuration.
     public static let shared = LaunchScreenSnapshot()
     /// UIWindow where your custom snapshot will be added.
     public var window: UIWindow?
     fileprivate let application: UIApplication
     fileprivate var view: UIView?
+    fileprivate var trigger = Trigger.willResignActive
     fileprivate var animation = Animation()
     fileprivate var force = false
     private let notificationCenter: NotificationCenter
@@ -65,9 +74,9 @@ public class LaunchScreenSnapshot {
 
      - Returns: Shared LaunchScreenSnapshot instance with default configuration.
      */
-    @discardableResult public static func protect(with view: UIView? = nil, animation: Animation = Animation(), force: Bool = false) -> LaunchScreenSnapshot {
+    @discardableResult public static func protect(with view: UIView? = nil, trigger: Trigger = .willResignActive, animation: Animation = Animation(), force: Bool = false) -> LaunchScreenSnapshot {
         let launchScreenSnapshot = LaunchScreenSnapshot.shared
-        launchScreenSnapshot.protect(with: view, animation: animation, force: force)
+        launchScreenSnapshot.protect(with: view, trigger: trigger, animation: animation, force: force)
         return launchScreenSnapshot
     }
 
@@ -97,6 +106,7 @@ public class LaunchScreenSnapshot {
         self.notificationCenter = notificationCenter
         self.bundle = bundle
         notificationCenter.addObserver(self, selector: #selector(applicationWillResignActive), name: .UIApplicationWillResignActive, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
         notificationCenter.addObserver(self, selector: #selector(applicationWillEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
         notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -115,7 +125,7 @@ public class LaunchScreenSnapshot {
 
      - Returns: true if your app snapshot has been protected.
      */
-    @discardableResult public func protect(with view: UIView? = nil, animation: Animation = Animation(), force: Bool = false) -> Bool {
+    @discardableResult public func protect(with view: UIView? = nil, trigger: Trigger = .willResignActive, animation: Animation = Animation(), force: Bool = false) -> Bool {
         self.view = view
         if self.view == nil {
             if let launchStoryboardName = bundle.object(forInfoDictionaryKey: "UILaunchStoryboardName") as? String {
@@ -124,6 +134,7 @@ public class LaunchScreenSnapshot {
                 self.view = viewFromStoryboard(name: launchStoryboardName, bundle: bundle)
             }
         }
+        self.trigger = trigger
         self.animation = animation
         assert(animation.dampingRatio > 0, "LaunchScreenSnapshot: dampingRatio must be greater than 0.")
         self.force = force
@@ -146,8 +157,15 @@ public class LaunchScreenSnapshot {
 private extension LaunchScreenSnapshot {
 
     @objc func applicationWillResignActive(_ notification: Notification) {
-        application.ignoreSnapshotOnNextApplicationLaunch()
-        addView()
+        if trigger == .willResignActive {
+            addView()
+        }
+    }
+
+    @objc func applicationDidEnterBackground(_ notification: Notification) {
+        if trigger == .didEnterBackground {
+            addView()
+        }
     }
 
     @objc func applicationWillEnterForeground(_ notification: Notification) {
@@ -163,6 +181,7 @@ private extension LaunchScreenSnapshot {
     }
 
     func addView() {
+        application.ignoreSnapshotOnNextApplicationLaunch()
         if let view = view {
             view.alpha = 0
             window?.addSubview(view)
