@@ -183,12 +183,9 @@ private extension LaunchScreenSnapshot {
     func addView() {
         application.ignoreSnapshotOnNextApplicationLaunch()
         if let view = view {
-            view.alpha = 0
             window?.addSubview(view)
             window?.bringSubview(toFront: view)
-            UIView.animate(withDuration: animation.duration, delay: animation.delay, usingSpringWithDamping: animation.dampingRatio, initialSpringVelocity: animation.velocity, options: animation.options, animations: {
-                view.alpha = 1
-            })
+            view.alpha = 1
         }
     }
 
@@ -209,8 +206,6 @@ private extension LaunchScreenSnapshot {
                 view.removeFromSuperview()
                 completion?()
             })
-        } else {
-            completion?()
         }
     }
 

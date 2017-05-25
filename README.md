@@ -68,8 +68,8 @@ let launchScreenSnapshot = LaunchScreenSnapshot(application: UIApplication, noti
 #### Provided parameters:
 
 ```swift
-let animationOptions = LaunchScreenSnapshot.Animation(duration: TimeInterval, delay: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions)
-launchScreenSnapshot.protect(with: UIView?, trigger: LaunchScreenSnapshot.Trigger, animation: animationOptions, force: Bool)
+let restoreAnimationOptions = LaunchScreenSnapshot.Animation(duration: TimeInterval, delay: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions)
+launchScreenSnapshot.protect(with: UIView?, trigger: LaunchScreenSnapshot.Trigger, animation: restoreAnimationOptions, force: Bool)
 ```
 
 ## Etc.
