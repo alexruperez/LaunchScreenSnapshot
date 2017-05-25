@@ -1,3 +1,7 @@
+# Release 1.0.2
+
+- [x] [QA1838](https://developer.apple.com/library/content/qa/qa1838/_index.html) Note Fix.
+
 # Release 1.0.1
 
 - [x] LaunchScreenSnapshot.Trigger enum.
