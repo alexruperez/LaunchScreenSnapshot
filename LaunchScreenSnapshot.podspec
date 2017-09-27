@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LaunchScreenSnapshot'
-  s.version          = '1.0.2'
+  s.version          = '1.1.0'
   s.summary          = 'Protects sensitive data in your app snapshot.'
 
   s.homepage         = 'https://github.com/alexruperez/LaunchScreenSnapshot'
