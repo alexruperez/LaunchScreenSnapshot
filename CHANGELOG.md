@@ -1,3 +1,7 @@
+# Release 1.2.0
+
+- [x] Swift 4.2 compatible. Thanks [mofneko](https://github.com/mofneko)!
+
 # Release 1.1.0
 
 - [x] Swift 4.0 compatible.
