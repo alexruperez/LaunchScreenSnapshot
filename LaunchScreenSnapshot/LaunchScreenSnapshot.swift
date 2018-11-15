@@ -21,7 +21,7 @@ public class LaunchScreenSnapshot {
         /// The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. A value of 1 corresponds to the total animation distance traversed in one second. For example, if the total animation distance is 200 points and you want the start of the animation to match a view velocity of 100 pt/s, use a value of 0.5. Default is 0.
         public var velocity: CGFloat = 0
         /// A mask of options indicating how you want to perform the animations. For a list of valid constants, see UIViewAnimationOptions. Default is [].
-        public var options: UIViewAnimationOptions = []
+        public var options: UIView.AnimationOptions = []
 
         /**
          Initializes a new LaunchScreenSnapshot.Animation with the provided configuration.
@@ -36,7 +36,7 @@ public class LaunchScreenSnapshot {
 
          - Returns: A LaunchScreenSnapshot.LaunchScreenSnapshot.Animation instance, custom built.
          */
-        public init(duration: TimeInterval = 0, delay: TimeInterval = 0, dampingRatio: CGFloat = 1, velocity: CGFloat = 0, options: UIViewAnimationOptions = []) {
+        public init(duration: TimeInterval = 0, delay: TimeInterval = 0, dampingRatio: CGFloat = 1, velocity: CGFloat = 0, options: UIView.AnimationOptions = []) {
             self.duration = duration
             self.delay = delay
             self.dampingRatio = dampingRatio
@@ -105,10 +105,10 @@ public class LaunchScreenSnapshot {
         self.window = application.delegate?.window ?? application.keyWindow ?? application.windows.first
         self.notificationCenter = notificationCenter
         self.bundle = bundle
-        notificationCenter.addObserver(self, selector: #selector(applicationWillResignActive), name: .UIApplicationWillResignActive, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(applicationWillEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     deinit {
@@ -184,7 +184,7 @@ private extension LaunchScreenSnapshot {
         application.ignoreSnapshotOnNextApplicationLaunch()
         if let view = view {
             window?.addSubview(view)
-            window?.bringSubview(toFront: view)
+            window?.bringSubviewToFront(view)
             view.alpha = 1
         }
     }
